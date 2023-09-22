@@ -1,53 +1,81 @@
 #include "sort.h"
+
 /**
- * quicksort- function recur for sorting
- * @a:rray: array
- * @first: first
- * @last: last
- * @sizeArray: size of array
+ * _swap - change two positions
+ * @array: variable int
+ * @i: variable int
+ * @j: variable int
+ * @size: variable size
  */
-void quicksort(int *array, int first, int last, size_t sizeArray)
+
+void _swap(int *array, int i, int j, size_t size)
 {
-	int i, j, pivot, temp;
+	int tmp;
 
-	if (first < last)
+	if (array[i] != array[j])
 	{
-		pivot = first;
-		i = first;
-		j = last;
-
-		while (i < j)
-		{
-			while (array[i] <= array[pivot] && i < last)
-				i++;
-			while (array[j] > array[pivot])
-				j--;
-
-			if (i < j)
-			{
-				temp = array[i];
-				array[i] = array[j];
-				array[j] = temp;
-			}
-		}
-		temp = array[pivot];
-		array[pivot] = array[j];
-		array[j] = temp;
-		quicksort(array, first, j - 1, sizeArray);
-		quicksort(array, j + 1, last, sizeArray);
-		print_array(array, sizeArray);
+		tmp = array[i];
+		array[i] = array[j];
+		array[j] = tmp;
+		print_array(array, size);
 	}
 }
+
 /**
- * quick_sort - function that sort
- * @array: array
- * @size: size
+ * partition - function sort a partition
+ * @array: variable int
+ * @start: variable int
+ * @end: variable int
+ * @size: variable size
+ * Return: int
  */
+
+int partition(int *array, int start, int end, size_t size)
+{
+	int i = start, j, pivot = array[end];
+
+	for (j = start; j <= end; j++)
+	{
+		if (array[j] < pivot)
+		{
+			_swap(array, i, j, size);
+			i++;
+		}
+	}
+	_swap(array, i, end, size);
+	return (i);
+}
+
+/**
+ * quicksort - function sorts an array of integers in ascending
+ * @array: variable int
+ * @start: variable int
+ * @end: variable int
+ * @size: variable size
+ */
+
+void quicksort(int *array, int start, int end, size_t size)
+{
+	int pivot;
+
+	if (start >= end)
+	{
+		return;
+	}
+	pivot = partition(array, start, end, size);
+	quicksort(array, start, pivot - 1, size);
+	quicksort(array, pivot + 1, end, size);
+}
+
+/**
+ * quick_sort - function sorts an array of integers in ascending
+ * @array: variable int
+ * @size: variable size
+ */
+
 void quick_sort(int *array, size_t size)
 {
-	int last = size - 1;
-	int first = 0;
-
-	quicksort(array, first, last, size);
-
+	if (size < 2)
+		return;
+	quicksort(array, 0, size - 1, size);
 }
