@@ -1,46 +1,29 @@
 #include "sort.h"
-
 /**
- * insertion_sort_list - Sorts dll of ints in order l-h.
- * @list: Double pointer to the head of the linked list.
- *
+ *bubble_sort - a sorting algorithm that uses bubbles
+ *@array: the array that gets pulled in
+ *@size: the size of said array
+ *Return: just a print please
  */
-void insertion_sort_list(listint_t **list)
+void bubble_sort(int *array, size_t size)
 {
-	listint_t *current, *current_node, *previous_node;
-	int tmp;
+	size_t i, n;
+	int temp;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	if (array == NULL || size < 2)
 		return;
 
-	current = (*list)->next;
-	while (current != NULL)
+	for (i = 0; i < size - 1; i++)
 	{
-		current_node = current;
-		while (current_node->prev != NULL)
+		for (n = 0; n < size - i - 1; n++)
 		{
-			tmp = 0;
-			if (current_node->n < current_node->prev->n)
+			if (array[n] > array[n + 1])
 			{
-				if (current_node->prev->prev != NULL)
-					current_node->prev->prev->next = current_node;
-				current_node->prev->next = current_node->next;
-				previous_node = current_node->prev->prev;
-				current_node->prev->prev = current_node;
-
-				if (current_node->next != NULL)
-					current_node->next->prev = current_node->prev;
-				current_node->next = current_node->prev;
-				current_node->prev = previous_node;
-				tmp = 1;
-
-				if (current_node->prev == NULL)
-					*list = current_node;
-				print_list(*list);
+				temp = array[n];
+				array[n] = array[n + 1];
+				array[n + 1] = temp;
+				print_array(array, size);
 			}
-			if (tmp == 0)
-				current_node = current_node->prev;
 		}
-		current = current->next;
 	}
 }

@@ -1,30 +1,37 @@
 #include "sort.h"
-
 /**
- * bubble_sort - Calls function
- * @array: Array to be sorted
- * @size: Size of array
- * Description: Function that sorts an array using the bubble sort method
- * Return: 0
+ *insertion_sort_list - sorting a list based off of insertion
+ *@list: the linked list that is being sorted
+ *Return: a finished, sorted list
  */
-void bubble_sort(int *array, size_t size)
+void insertion_sort_list(listint_t **list)
 {
-	unsigned int c, n, t;
+	listint_t *current, *next, *prev;
 
-	if (!array)
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
-	for (c = 0; c < size - 1; c++)
+	current = (*list)->next;
+	while (current != NULL)
 	{
-		for (n = 0; n < size - c - 1; n++)
+		next = current->next;
+		prev = current->prev;
+		while (prev != NULL && prev->n > current->n)
 		{
-			if (array[n] > array[n + 1])
-			{
-				t = array[n];
-				array[n] = array[n + 1];
-				array[n + 1] = t;
-				print_array(array, size);
-			}
+			prev->next = current->next;
+			if (current->next != NULL)
+				current->next->prev = prev;
+			current->next = prev;
+			current->prev = prev->prev;
+			prev->prev = current;
+			if (current->prev == NULL)
+				*list = current;
+			else
+				current->prev->next = current;
+			print_list(*list);
+			prev = current->prev;
 		}
+		current = next;
 	}
+
 }
