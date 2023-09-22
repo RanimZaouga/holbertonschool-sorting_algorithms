@@ -1,37 +1,28 @@
 #include "sort.h"
 /**
- *insertion_sort_list - sorting a list based off of insertion
- *@list: the linked list that is being sorted
- *Return: a finished, sorted list
+ * bubble_sort - function that sort  an array of integers in ascending order
+ * @array: the table
+ * @size: size of the table
  */
-void insertion_sort_list(listint_t **list)
+void bubble_sort(int *array, size_t size)
 {
-	listint_t *current, *next, *prev;
+	size_t i, j;
+	int tmp;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	if (!array)
 		return;
-
-	current = (*list)->next;
-	while (current != NULL)
+	for (i = 0; i < (size - 1); i++)
 	{
-		next = current->next;
-		prev = current->prev;
-		while (prev != NULL && prev->n > current->n)
+		/** Last i elements are already in place*/
+		for (j = 0; j < ((size - i) - 1); j++)
 		{
-			prev->next = current->next;
-			if (current->next != NULL)
-				current->next->prev = prev;
-			current->next = prev;
-			current->prev = prev->prev;
-			prev->prev = current;
-			if (current->prev == NULL)
-				*list = current;
-			else
-				current->prev->next = current;
-			print_list(*list);
-			prev = current->prev;
+			if (array[j] > array[j + 1])
+			{
+				tmp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = tmp;
+				print_array(array, size);
+			}
 		}
-		current = next;
 	}
-
 }

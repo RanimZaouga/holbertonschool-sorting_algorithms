@@ -1,10 +1,7 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef _SORT_H_
+#define _SORT_H_
 
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <stddef.h>
 
 /**
  * struct listint_s - Doubly linked list node
@@ -20,13 +17,18 @@ typedef struct listint_s
 	struct listint_s *next;
 } listint_t;
 
-void print_list(const listint_t *list);
+
+void bubble_sort(int *array, size_t size);
+
 void print_array(const int *array, size_t size);
+
+void print_list(const listint_t *list);
+
 void bubble_sort(int *array, size_t size);
 void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
-void quick_sort(int *array, size_t size);
 void swap(int *a, int *b);
-int partition(int *array, int low, int high, size_t size);
-void quick_sort_helper(int *array, int low, int high, size_t size);
+void quick_sort(int *array, size_t size);
+void quicksort(int *array, int first, int last, size_t sizeArray);
+
 #endif
