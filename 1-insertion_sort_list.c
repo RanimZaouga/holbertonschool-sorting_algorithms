@@ -1,29 +1,44 @@
 #include "sort.h"
 /**
- *bubble_sort - a sorting algorithm that uses bubbles
- *@array: the array that gets pulled in
- *@size: the size of said array
- *Return: just a print please
+ * insertion_sort_list - function that sort  list
+ * @list: the list
  */
-void bubble_sort(int *array, size_t size)
+void insertion_sort_list(listint_t **list)
 {
-	size_t i, n;
-	int temp;
+	struct listint_s *currentNode, *swapNode, *prevNode;
 
-	if (array == NULL || size < 2)
+
+	if (list == NULL || *list == NULL)
 		return;
 
-	for (i = 0; i < size - 1; i++)
+
+	currentNode = *list;
+	while ((currentNode = currentNode->next))
 	{
-		for (n = 0; n < size - i - 1; n++)
+		swapNode = currentNode;
+		while (currentNode->prev != NULL
+				&& currentNode->prev->n > currentNode->n)
 		{
-			if (array[n] > array[n + 1])
-			{
-				temp = array[n];
-				array[n] = array[n + 1];
-				array[n + 1] = temp;
-				print_array(array, size);
-			}
+			prevNode = currentNode->prev;
+			if (swapNode->next != NULL)
+				swapNode->next->prev = prevNode;
+			if (prevNode->prev != NULL)
+				prevNode->prev->next = swapNode;
+			else
+				*list = swapNode;
+
+
+
+			prevNode->next = swapNode->next;
+			swapNode->prev = prevNode->prev;
+			swapNode->next = prevNode;
+			prevNode->prev = swapNode;
+			print_list(*list);
+
+
+
+
 		}
+
 	}
 }
